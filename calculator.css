@@ -1,7 +1,8 @@
 html{
     box-sizing:border-box;
-    border: 3px double black;
     background-color: rgb(83, 109, 123);
+    background-image: url(blurred.jpg);
+    background-size: 1920px;
 }
 .container{
     width: 320px;
@@ -47,6 +48,8 @@ html{
 body{
     display: flex;
     justify-content: center;
+    align-items: center;
+    height: 96vh;
 }
 .buttons{
     border: none;
@@ -105,7 +108,7 @@ body{
     
     grid-column-start: 4;
     grid-row-start: 2;
-    border: rgb(56, 56, 100) 3px outset;
+    border: rgb(98, 98, 174) 3px outset;
     color:rgb(189, 189, 189);
     background-color: rgb(83, 77, 94);
 }
@@ -113,7 +116,7 @@ body{
    
     grid-column-start: 4;
     grid-row-start: 3;
-    border: rgb(56, 56, 100) 3px outset;
+    border: rgb(98, 98, 174) 3px outset;
     color:rgb(189, 189, 189);
     background-color: rgb(83, 77, 94);
 }    
@@ -122,7 +125,7 @@ body{
     
     grid-column-start: 4;
     grid-row-start: 4;
-    border: rgb(56, 56, 100) 3px outset;
+    border: rgb(98, 98, 174) 3px outset;
     color:rgb(189, 189, 189);
     background-color: rgb(83, 77, 94);
 }
@@ -130,7 +133,7 @@ body{
     
     grid-column-start: 4;
     grid-row-start:5;
-    border: rgb(56, 56, 100) 3px outset;
+    border: rgb(98, 98, 174) 3px outset;
     color:rgb(189, 189, 189);
     background-color: rgb(83, 77, 94);
 }
@@ -138,7 +141,7 @@ body{
     
     grid-row-start: 6;
     grid-column:3/5;
-    border: rgb(36, 73, 50) 3px outset;
+    border: rgb(78, 155, 107) 3px outset;
     color:rgb(189, 189, 189);
-    background-color: rgb(55, 68, 61);
+    background-color: rgb(92, 136, 113);
 }
