@@ -120,16 +120,20 @@ function operatorPress(e) {
 
 //checks size of otherNumber, and performs appropriate operation
 function solve() {
+    let solution = '';
     if (displayString.otherNumber.length != 0) {
         switch (displayString.operator) {
             case '+':
-                let solution = addNumbers(parseInt(displayString.firstNumber.join('')), parseInt(displayString.otherNumber.join('')));
+                solution = addNumbers(parseInt(displayString.firstNumber.join('')), parseInt(displayString.otherNumber.join('')));
                 display.textContent = solution
                 solvedReset(solution)
                 return solution;
             // break;
             case '-':
-                subtractNumbers(parseInt(displayString.firstNumber.join('')), parseInt(displayString.otherNumber.join('')))
+                solution = subtractNumbers(parseInt(displayString.firstNumber.join('')), parseInt(displayString.otherNumber.join('')))
+                display.textContent = solution
+                solvedReset(solution)
+                return solution;
                 break;
             case '\00F7':
                 divideNumbers(displayString.firstNumber.join(''), displayString.otherNumber.join(''))
