@@ -66,9 +66,9 @@ let displayString = {
 
 //function updates display depending on type of button press
 function updateDisplay(value) {
-    
-    if (value == 'number' && operatorIsPressed == false) {
-        
+
+    if (value == 'number' && operatorIsPressed === false) {
+
         if (displayString.firstNumber.length < 9) {
             display.textContent = displayString['firstNumber'].join('');
         }
@@ -95,13 +95,28 @@ function buttonPress(e) {
 //function for handling operator presses
 function operatorPress(e) {
     operatorIsPressed = true;
-    if (e.target.innerText !== '=') {
-        displayString['operator'] = e.target.innerText
+
+    if (displayString.firstNumber.length >= 1 && displayString.otherNumber.length >= 1) {
+        let solution = solve();
+        displayString.firstNumber = []
+        displayString.firstNumber.push(solution)
+        displayString.operator = e.target.innerText;
+        displayString.otherNumber = [];
+        display.textContent = solution;
+    } else{
+        displayString.operator = e.target.innerText;
         updateDisplay('symbol');
-    } else {
-        solve();
     }
+
 }
+//old operatorPress function
+// operatorIsPressed = true;
+//     if (e.target.innerText !== '=') {
+//         displayString['operator'] = e.target.innerText
+//         updateDisplay('symbol');
+//     } else {
+//         solve();
+//     }
 
 //checks size of otherNumber, and performs appropriate operation
 function solve() {
@@ -112,7 +127,7 @@ function solve() {
                 display.textContent = solution
                 solvedReset(solution)
                 return solution;
-                // break;
+            // break;
             case '-':
                 subtractNumbers(parseInt(displayString.firstNumber.join('')), parseInt(displayString.otherNumber.join('')))
                 break;
@@ -142,9 +157,7 @@ function multiplyNumbers(first, second) {
 }
 
 function solvedReset(solution) {
-
-    displayString['otherNumber'] = solution.toString().split('');
     displayString['firstNumber'] = [];
-    displayString['operator'] = '';
-    operatorIsPressed = false;
+    displayString['firstNumber'].push(solution);
+    displayString['otherNumber'] = [];
 }
