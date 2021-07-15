@@ -28,6 +28,9 @@ let divide = document.querySelector('.divide');
 let add = document.querySelector('.add')
 let subtract = document.querySelector('.subtract')
 
+//clear button
+let clear = document.querySelector('.clear')
+
 //add event listeners on digits
 one.addEventListener('click', buttonPress);
 two.addEventListener('click', buttonPress);
@@ -46,6 +49,9 @@ multiply.addEventListener('click', operatorPress)
 divide.addEventListener('click', operatorPress)
 add.addEventListener('click', operatorPress)
 subtract.addEventListener('click', operatorPress)
+
+//clear event listener
+clear.addEventListener('click', clearDisplayString)
 
 //grab display
 let display = document.querySelector('.display')
@@ -77,7 +83,7 @@ function updateDisplay(value) {
     } else if (value == 'symbol') {
         display.textContent = displayString['operator']
     } else {
-        console.log('no values matched')
+        display.textContent = '';
     }
 }
 
@@ -103,20 +109,13 @@ function operatorPress(e) {
         displayString.operator = e.target.innerText;
         displayString.otherNumber = [];
         display.textContent = solution;
-    } else{
+    } else {
         displayString.operator = e.target.innerText;
         updateDisplay('symbol');
     }
 
 }
-//old operatorPress function
-// operatorIsPressed = true;
-//     if (e.target.innerText !== '=') {
-//         displayString['operator'] = e.target.innerText
-//         updateDisplay('symbol');
-//     } else {
-//         solve();
-//     }
+
 
 //checks size of otherNumber, and performs appropriate operation
 function solve() {
@@ -125,21 +124,27 @@ function solve() {
         switch (displayString.operator) {
             case '+':
                 solution = addNumbers(parseInt(displayString.firstNumber.join('')), parseInt(displayString.otherNumber.join('')));
-                display.textContent = solution
-                solvedReset(solution)
+                display.textContent = solution;
+                solvedReset(solution);
                 return solution;
             // break;
             case '-':
                 solution = subtractNumbers(parseInt(displayString.firstNumber.join('')), parseInt(displayString.otherNumber.join('')))
-                display.textContent = solution
-                solvedReset(solution)
+                display.textContent = solution;
+                solvedReset(solution);
                 return solution;
                 break;
             case '\00F7':
-                divideNumbers(displayString.firstNumber.join(''), displayString.otherNumber.join(''))
+                solution = divideNumbers(parseInt(displayString.firstNumber.join('')), parseInt(displayString.otherNumber.join('')))
+                display.textContent = solution;
+                solvedReset(solution);
+                return solution;
                 break;
-            case '*':
-                multiplyNumbers(displayString.firstNumber.join(''), displayString.otherNumber.join(''))
+            case 'x':
+                solution = multiplyNumbers(parseInt(displayString.firstNumber.join('')), parseInt(displayString.otherNumber.join('')))
+                display.textContent = solution;
+                solvedReset(solution);
+                return solution;
                 break;
         }
 
@@ -161,7 +166,18 @@ function multiplyNumbers(first, second) {
 }
 
 function solvedReset(solution) {
+
     displayString['firstNumber'] = [];
     displayString['firstNumber'].push(solution);
     displayString['otherNumber'] = [];
+}
+
+function clearDisplayString() {
+
+    displayString = {
+        firstNumber: [],
+        operator: '',
+        otherNumber: [],
+    }
+    updateDisplay('clear');
 }
