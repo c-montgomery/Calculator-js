@@ -64,14 +64,29 @@ let displayString = {
     otherNumber: [],
 }
 
+//function updates display depending on type of button press
+function updateDisplay(value) {
+    
+    if (value == 'number' && operatorIsPressed == false) {
+        
+        if (displayString.firstNumber.length < 9) {
+            display.textContent = displayString['firstNumber'].join('');
+        }
+    } else if (value == 'number' && operatorIsPressed === true) {
+        display.textContent = displayString['otherNumber'].join('');
+    } else if (value == 'symbol') {
+        display.textContent = displayString['operator']
+    } else {
+        console.log('no values matched')
+    }
+}
+
 //handles button presses, appends to displayString[firstNumber]
 function buttonPress(e) {
     if (!operatorIsPressed) {
         displayString['firstNumber'].push(e.target.innerText);
-        console.log(displayString['firstNumber']);
         updateDisplay('number');
     } else {
-        console.log('statemetn else\'d')
         displayString['otherNumber'].push(e.target.innerText);
         updateDisplay('number')
     }
@@ -81,50 +96,25 @@ function buttonPress(e) {
 function operatorPress(e) {
     operatorIsPressed = true;
     if (e.target.innerText !== '=') {
-        console.log('in operator press')
-        console.log(e)
         displayString['operator'] = e.target.innerText
-        console.log(displayString['operator'])
         updateDisplay('symbol');
     } else {
-        display.textContent = solve();
+        solve();
     }
 }
-
-//function updates display depending on type of button press
-function updateDisplay(value){
-    console.log('in updateDisplay')
-    console.log(value)
-    if (value == 'number' && operatorIsPressed == false){
-        console.log('in first if')
-        if (displayString.firstNumber.length < 9) {
-            display.textContent = displayString['firstNumber'].join('');
-        }
-    } else if (value == 'number' && operatorIsPressed === true){
-        
-        console.log('operator pressed and update entered')
-        display.textContent = displayString['otherNumber'].join('');
-    } else if (value == 'symbol'){
-        console.log('in symbol')
-        display.textContent = displayString['operator']
-    }else{
-        console.log('no values matched')
-    }  
-}
-
 
 //checks size of otherNumber, and performs appropriate operation
 function solve() {
     if (displayString.otherNumber.length != 0) {
         switch (displayString.operator) {
             case '+':
-                console.log('dis')
-                return addNumbers(parseInt(displayString.firstNumber.join('')), parseInt(displayString.otherNumber.join('')));
-                
-                break;
+                let solution = addNumbers(parseInt(displayString.firstNumber.join('')), parseInt(displayString.otherNumber.join('')));
+                display.textContent = solution
+                solvedReset(solution)
+                return solution;
+                // break;
             case '-':
                 subtractNumbers(parseInt(displayString.firstNumber.join('')), parseInt(displayString.otherNumber.join('')))
-
                 break;
             case '\00F7':
                 divideNumbers(displayString.firstNumber.join(''), displayString.otherNumber.join(''))
@@ -138,13 +128,11 @@ function solve() {
 }
 
 function addNumbers(first, second) {
-    let total = (parseInt(first)+parseInt(second));
-    console.log('vvvvvvv')
-    console.log(typeof total)
+    let total = (parseInt(first) + parseInt(second));
     return total;
 }
 function subtractNumbers(first, second) {
-    return first -second;
+    return first - second;
 }
 function divideNumbers(first, second) {
     return parseInt(first) / parseInt(second);
@@ -153,6 +141,10 @@ function multiplyNumbers(first, second) {
     return parseInt(first) * parseInt(second);
 }
 
-function solvedReset(){
+function solvedReset(solution) {
 
+    displayString['otherNumber'] = solution.toString().split('');
+    displayString['firstNumber'] = [];
+    displayString['operator'] = '';
+    operatorIsPressed = false;
 }

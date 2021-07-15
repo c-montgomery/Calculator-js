@@ -107,7 +107,7 @@ body{
     grid-row-start: 2;
     border: rgb(56, 56, 100) 3px outset;
     color:rgb(189, 189, 189);
-    background-color: rgb(94, 93, 93);
+    background-color: rgb(83, 77, 94);
 }
 .subtract{
    
@@ -115,7 +115,7 @@ body{
     grid-row-start: 3;
     border: rgb(56, 56, 100) 3px outset;
     color:rgb(189, 189, 189);
-    background-color: rgb(94, 93, 93);
+    background-color: rgb(83, 77, 94);
 }    
 
 .multiply{
@@ -124,7 +124,7 @@ body{
     grid-row-start: 4;
     border: rgb(56, 56, 100) 3px outset;
     color:rgb(189, 189, 189);
-    background-color: rgb(94, 93, 93);
+    background-color: rgb(83, 77, 94);
 }
 .divide{
     
@@ -132,7 +132,7 @@ body{
     grid-row-start:5;
     border: rgb(56, 56, 100) 3px outset;
     color:rgb(189, 189, 189);
-    background-color: rgb(94, 93, 93);
+    background-color: rgb(83, 77, 94);
 }
 .equals{
     
@@ -140,5 +140,5 @@ body{
     grid-column:3/5;
     border: rgb(36, 73, 50) 3px outset;
     color:rgb(189, 189, 189);
-    background-color: rgb(94, 93, 93);
+    background-color: rgb(55, 68, 61);
 }
