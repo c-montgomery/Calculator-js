@@ -1,9 +1,10 @@
-/* Add a condition
+/* Add a function that puts buttonpressed attributes to false except the one being pressed. Add a condition
 if they aren't pressed, and if they are pressed, numbers should be added to the otherNumber array. If there are items in both the 
 first number, an operator being pressed is true and there's a second number, the solved equation integer should be displayed, and then
 moved to the firstNumber array  ---can't think of a reason it needs to be split, so adding the complete number to array[0] should be fine  
 ---consider conolidating the  buttonPressed and operatorPressed functions\
 ---Do the math functions need to be discreet or can they be added to the solve function?
+---Do I need individual operator booleans? or can there be a universal operator isPressed boolean?
 ---complete solvedReset function, which adds the solution to an equation to the firstNumber variable, clears the operator and otherNumber
 ---Add button highlighting*/
 
@@ -88,96 +89,71 @@ function updateDisplay(value) {
 }
 
 function equalsPress(e){
-    if (displayString.firstNumber.length !=0 && displayString.otherNumber.length != 0 && displayString.operator.length !=0){
-        displayString.solution = solve();
+    if (displayString.firstNumber.length > 0 && displayString.otherNumber.length > 0 && displayString.operator.length == 1){
+        display.textContent = solve();
     }
 }
-
 function operatorPress(e){
-    if (displayString.solution){
-        displayString.firstNumber = [displayString.solution];
-        display.solution = '';
-        
-        displayString.otherNumber = [];
-        displayString.otherNumber = e.target.innerText;
-    }
-    if (displayString.firstNumber.length != 0 && displayString.otherNumber.length !=0){
-    solve()
-    
-    displayString.operator = e.target.innerText
-    } else if (displayString.operator.length == 0){
+    if (displayString.firstNumber.length > 0 && displayString.operator.length == 1){
+        displayString.firstNumber = solve();
         displayString.operator = e.target.innerText;
     }
-
+    if (displayString.operator.length == 0){
+        displayString.operator = e.target.innerText
+    } 
+    
 }
+
+
 function buttonPress(e){
-    if (!displayString.solution){
-        if (displayString.firstNumber.length != 0 && displayString.operator.length !=0){
-            displayString.otherNumber.push(e.target.innerText);
-            display.textContent = displayString.otherNumber.join('');
-        }else if (!displayString.operator){
-            displayString.firstNumber.push(e.target.innerText);
-            display.textContent = displayString.firstNumber.join('');
-        }
-    } else {
-        displayString.firstNumber = e.target.innerText;
-        display.textContent = displayString.firstNumber.join('')
-        displayString.otherNumber = [];
-        
-        if (displayString.firstNumber.length !=0 && displayString.operator.length !=0){
-            displayString.otherNumber.push(e.target.innerText);
-            display.textContent = displayString.otherNumber.join('');
-        }else if (displayString.operator){
-            displayString.firstNumber.push(e.target.innerText);
-            display.textContent = displayString.firstNumber.join('');
-        }
-        
+    if (displayString.firstNumber.length > 0 && displayString.operator.length == 1){
+        displayString.otherNumber.push(e.target.innerText);
+        display.textContent = displayString.otherNumber.join('');
+    }else if (!displayString.operator){
+        displayString.firstNumber.push(e.target.innerText);
+        display.textContent = displayString.firstNumber.join('');
     }
 }
 
 
-    //checks size of otherNumber, and performs appropriate operation
-    function solve() {
-        if (displayString.firstNumber.length !== 0 && displayString.otherNumber !== 0){
-            let solution = '';
-            if (displayString.otherNumber.length != 0) {
-                switch (displayString.operator) {
-                    case '+':
-                        solution = addNumbers(parseInt(displayString.firstNumber.join('')), parseInt(displayString.otherNumber.join('')));
-                        display.textContent = solution;
-                        
-                        displayString.solution = solution;
-                        solvedReset(solution);
-                        return solution;
-                    // break;
-                    case '-':
-                        solution = subtractNumbers(parseInt(displayString.firstNumber.join('')), parseInt(displayString.otherNumber.join('')))
-                        display.textContent = solution;
-                        solvedReset(solution);
-                        displayString.solution = solution;
-                        return solution;
-                        break;
-                    case '\00F7':
-                        solution = divideNumbers(parseInt(displayString.firstNumber.join('')), parseInt(displayString.otherNumber.join('')))
-                        display.textContent = solution;
-                        solvedReset(solution);
-                        displayString.solution = solution;
-                        return solution;
-                        break;
-                    case 'x':
-                        solution = multiplyNumbers(parseInt(displayString.firstNumber.join('')), parseInt(displayString.otherNumber.join('')))
-                        display.textContent = solution;
-                        solvedReset(solution);
-                        displayString.solution = solution;
-                        return solution;
-                        break;
-                    default:
-                        console.log('Oh, this is a problem')
-                }
-
-            }
+//checks size of otherNumber, and performs appropriate operation
+function solve() {
+    let solution = '';
+    if (displayString.otherNumber.length != 0) {
+        switch (displayString.operator) {
+            case '+':
+                solution = addNumbers(parseInt(displayString.firstNumber.join('')), parseInt(displayString.otherNumber.join('')));
+                display.textContent = solution;
+                solvedReset(solution);
+                return solution;
+            // break;
+            case '-':
+                solution = subtractNumbers(parseInt(displayString.firstNumber.join('')), parseInt(displayString.otherNumber.join('')))
+                display.textContent = solution;
+                solvedReset(solution);
+                displayString.solution = solution;
+                return solution;
+                break;
+            case '÷':
+                solution = divideNumbers(parseInt(displayString.firstNumber.join('')), parseInt(displayString.otherNumber.join('')))
+                display.textContent = solution;
+                solvedReset(solution);
+                displayString.solution = solution;
+                return solution;
+                break;
+            case 'x':
+                solution = multiplyNumbers(parseInt(displayString.firstNumber.join('')), parseInt(displayString.otherNumber.join('')))
+                display.textContent = solution;
+                solvedReset(solution);
+                displayString.solution = solution;
+                return solution;
+                break;
+            default:
+                console.log('Oh, this is a problem')
         }
+
     }
+}
 
     function addNumbers(first, second) {
         let total = (parseInt(first) + parseInt(second));
@@ -196,10 +172,8 @@ function buttonPress(e){
     function solvedReset(solution) {
 
         displayString['firstNumber'] = [];
-        displayString['solution'] = [];
-        displayString['solution'].push(solution);
+        displayString['firstNumber'].push(solution);
         displayString['otherNumber'] = [];
-        displayString.operator = ''
     }
 
     function clearDisplayString() {
