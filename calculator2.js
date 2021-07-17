@@ -55,6 +55,9 @@ let data = {
 
 let joined = (list) => {
     if (list.length > 1){
-        return list.join('')
+        return parseInt(list.join(''))
+    }else if (list.length = 1) {
+        return list[0];
+        
     }
 }

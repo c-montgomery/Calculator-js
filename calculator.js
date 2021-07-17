@@ -121,10 +121,8 @@ function buttonPress(e){
         }
     } else {
         displayString.firstNumber = e.target.innerText;
-        if (displayString.firstNumber.length == 1){
-        display.textContent = displayString.firstNumber[0];
+        display.textContent = displayString.firstNumber.join('')
         displayString.otherNumber = [];
-        }
         
         if (displayString.firstNumber.length !=0 && displayString.operator.length !=0){
             displayString.otherNumber.push(e.target.innerText);
@@ -145,14 +143,12 @@ function buttonPress(e){
             if (displayString.otherNumber.length != 0) {
                 switch (displayString.operator) {
                     case '+':
-                        if (displayString.firstNumber.length != 1 && displayString.firstNumber.length != 1){
                         solution = addNumbers(parseInt(displayString.firstNumber.join('')), parseInt(displayString.otherNumber.join('')));
                         display.textContent = solution;
                         
                         displayString.solution = solution;
                         solvedReset(solution);
                         return solution;
-                        } else if displays
                     // break;
                     case '-':
                         solution = subtractNumbers(parseInt(displayString.firstNumber.join('')), parseInt(displayString.otherNumber.join('')))
