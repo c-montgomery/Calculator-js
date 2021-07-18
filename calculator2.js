@@ -42,22 +42,82 @@ add.addEventListener('click', operatorPress);
 subtract.addEventListener('click', operatorPress);
 
 //clear event listener
-clear.addEventListener('click', clearDisplayString);
+clear.addEventListener('click', clearAll);
 
 //grab display
 let display = document.querySelector('.display');
 
 let data = {
-    firstList = [],
-    secondList = [],
-    operator = [],
+    firstList: [],
+    secondList: [],
+    operator: [],
+    firstFilled: false,
+    secondFilled: false,
+    operatorIncrement: 0,
 }
 
-let joined = (list) => {
-    if (list.length > 1){
-        return parseInt(list.join(''))
-    }else if (list.length = 1) {
-        return list[0];
+function buttonPress(e) {
+    if (data.operator.length == 0) {
+        data.firstList.push(e.target.innerText);
+        display.textContent = data.firstList.join('');
+    } else {
+        data.secondList.push(e.target.innerText)
+        display.textContent = data.secondList.join('');
+    }
+}
+function operatorPress(e) {
+    data.operator = e.target.innerText
+    if (data.operator.length > 0 && data.firstList.length > 0 && data.secondList.length > 0){
+        let result  = Number(solve());
+        data.firstList = [];
+        data.firstList.push(result);
+        data.secondList = [];
         
+        display.textContent = data.firstList.join('');
+    } else if (data.operator.length == 0 && data.secondList.length == 0) {
+        data.operator = (e.target.innerText);
+    }
+    
+}
+
+function equalsPress(e) {
+    data.operatorIncrement = 0;
+    if (data.firstList.length !== 0 && data.secondList.length !== 0 && data.operator.length !== 0) {
+        display.textContent = solve();
+        clearDataValues();
+        data.firstList.push(Number(display.textContent));
+    }
+}
+
+function clearDataValues() {
+    data = {
+        firstList: [],
+        secondList: [],
+        operator: [],
+    }
+}
+function solve(e) {
+    data.operatorIncrement = 0;
+    switch (data.operator[0]) {
+        case '+':
+            return parseInt(data.firstList.join('')) + parseInt(data.secondList.join(''));
+            break;
+        case '-':
+            return parseInt(data.firstList) - parseInt(data.secondList);
+            break;
+        case 'x':
+            return parseInt(data.firstList) * parseInt(data.secondList);
+            break;
+        case '÷':
+            return parseInt(data.firstList) / parseInt(data.secondList);
+            break;
+    }
+}
+function clearAll(){
+    display.textContent = '';
+    data = {
+        firstList: [],
+        secondList: [],
+        operator: [],
     }
 }
